@@ -2,7 +2,9 @@
 
 namespace Kelemen\JsonRpc20;
 
+use Kelemen\JsonRpc20\Exception\InternalErrorException;
 use Kelemen\JsonRpc20\Exception\JsonRpc2Exception;
+use Kelemen\JsonRpc20\Exception\ParamsException;
 use ReflectionMethod;
 
 class Processor
@@ -88,8 +90,12 @@ class Processor
             $result = $this->callMethod($this->handlers[$request->getMethod()], $request->getParams());
             $response->setResult($result);
 
-        } catch (JsonRpc2Exception $e) {
+        } catch (ParamsException $e) {
             $response->setError(Error::ERROR_INVALID_PARAMS);
+            return $response;
+
+        } catch (InternalErrorException $e) {
+            $response->setError(Error::ERROR_INTERNAL_ERROR);
             return $response;
         }
 
@@ -119,7 +125,7 @@ class Processor
                     $realParams[] = $param->getDefaultValue();
 
                 } else {
-                    throw new JsonRpc2Exception('Required parameter is missing');
+                    throw new ParamsException('Required parameter is missing');
                 }
             }
         }
@@ -131,7 +137,7 @@ class Processor
 
         // Check if we have all required parameters to process method
         if ($reflect->getNumberOfRequiredParameters() > count($realParams)) {
-            throw new JsonRpc2Exception('Required parameter is missing');
+            throw new ParamsException('Required parameter is missing');
         }
 
         return $reflect->invokeArgs($function[0], $realParams);
