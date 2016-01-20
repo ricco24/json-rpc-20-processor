@@ -2,7 +2,7 @@
 
 namespace Kelemen\JsonRpc20\Transform;
 
-use App\ApiModule\JsonRpc2\Transform\Transformer\ResponseTransformer;
+use Kelemen\JsonRpc20\Transform\Transformer\ResponseTransformer;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\ArraySerializer;
