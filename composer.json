@@ -1,0 +1,19 @@
+{
+    "name": "kelemen/json-rpc-20-processor",
+    "type": "library",
+    "description": "JSON RPC 2.0 processor library",
+    "keywords": ["json", "rpc"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Kelemen"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "league/fractal": "~0.9"
+    },
+    "autoload": {
+        "classmap": ["src/"] 
+    }
+}
